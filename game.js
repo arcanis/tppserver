@@ -1,3 +1,5 @@
+import Fs     from 'fs';
+
 import Engine from 'arch.js/dist/archjs-gambatte';
 import Virtjs from 'virtjs';
 
@@ -8,12 +10,31 @@ export default function (app, game) {
     let audio = new Virtjs.devices.audio.NullAudio();
     let input = new Virtjs.devices.inputs.ManualInput({ codeMap: Engine.codeMap });
 
+    let engine = new Engine({ devices: { screen, timer, audio, input } });
+
+    // ---
+
+    setInterval(() => {
+
+        Fs.writeFileSync(`${__dirname}/gold.sav`, new Buffer(engine.getState()));
+
+    }, 60 * 1000);
+
+    // ---
+
     Virtjs.utils.DataUtils.fetchArrayBuffer(`${__dirname}/assets/gold.gbc`).then(arrayBuffer => {
 
-        let engine = new Engine({ devices: { screen, timer, audio, input } });
-        engine.loadArrayBuffer(arrayBuffer);
+        Virtjs.utils.DataUtils.fetchArrayBuffer(`${__dirname}/gold.sav`).catch(() => {
 
-        timer.start();
+            return null;
+
+        }).then(initialState => {
+
+            engine.loadArrayBuffer(arrayBuffer, { initialState });
+
+            timer.start();
+
+        });
 
     }, error => {
 
@@ -124,29 +145,32 @@ export default function (app, game) {
 
         } }));
 
+        if (frame)
+            ctx.websocket.send(frame);
+
         return next(ctx);
 
     });
 
     // -- The following code will emit each frame to each client
 
-    let previous = null;
+    let frame = null;
 
     function flushCallback() {
 
         let data = screen.inputData;
 
-        if (previous && Virtjs.utils.DataUtils.areEqualViews(data, previous))
+        if (frame && Virtjs.utils.DataUtils.areEqualViews(data, frame))
             return;
 
-        previous = data.slice();
+        frame = data.slice();
 
         for (let client of app.ws.server.clients) {
 
             if (client.readyState !== 1)
                 continue;
 
-            client.send(previous.buffer);
+            client.send(frame);
 
         }
 

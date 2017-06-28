@@ -1,8 +1,8 @@
 import Virtjs from 'virtjs';
 
 let canvas = document.querySelector(`#screen`);
-let logbox = document.querySelector(`#logbox`);
-let chatbox = document.querySelector(`#chatbox`);
+let logbox = document.querySelector(`#logbox .content`);
+let chatbox = document.querySelector(`#chatbox .content`);
 let userbox = document.querySelector(`#userbox`);
 
 let loglines = logbox.getElementsByClassName(`.line`);
@@ -33,6 +33,7 @@ websocket.addEventListener(`message`, e => {
     line.appendChild(document.createTextNode(`${data.input.name} (${Math.round(data.input.percent * 100)}%)`));
 
     logbox.appendChild(line);
+    logbox.scrollTop = logbox.scrollHeight;
 
 });
 
@@ -56,6 +57,7 @@ websocket.addEventListener(`message`, e => {
     line.appendChild(document.createTextNode(data.chat));
 
     chatbox.appendChild(line);
+    chatbox.scrollTop = chatbox.scrollHeight;
 
 });
 

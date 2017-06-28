@@ -9,6 +9,26 @@ html, body {
     background: #000000;
 }
 
+h1, h2 {
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: .5em;
+}
+
+h2 {
+    border-bottom: 10px solid white;
+
+    background: #424242;
+}
+
+em {
+    font-style: normal;
+
+    color: #FFC000;
+}
+
 #main {
     display: flex;
 
@@ -41,15 +61,40 @@ html, body {
     border-left: 10px solid white;
 }
 
-#logbox, #chatbox {
-    overflow-y: scroll;
-
-    padding: 10px;
-
+#ui > div {
     font-family: monospace;
     font-weight: bold;
 
     color: #ffffff;
+}
+
+#ui > * {
+    border-top: 10px solid white;
+}
+
+#ui > *:first-child {
+    border-top: 0;
+}
+
+#logbox, #chatbox {
+    display: flex;
+    flex-direction: column;
+}
+
+#logbox h2, #chatbox h2 {
+    flex: none;
+}
+
+#instructions, #logbox h2, #chatbox h2, #logbox .content, #chatbox .content {
+    padding: 10px;
+}
+
+#logbox .content, #chatbox .content {
+    flex: auto;
+    width: 100%;
+    height: 100%;
+
+    overflow-y: scroll;
 }
 
 #logbox {
@@ -62,8 +107,6 @@ html, body {
     flex: 1;
     width: 100%;
     height: 100%;
-
-    border-top: 10px solid white;
 }
 
 #userbox {
