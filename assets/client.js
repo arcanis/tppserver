@@ -75,9 +75,50 @@ userbox.addEventListener(`keydown`, e => {
     let input = userbox.value;
     userbox.value = ``;
 
-    websocket.send(JSON.stringify({ input }));
+    send(input);
 
 });
+
+userbox.addEventListener(`keydown`, e => {
+
+    if (!e.shiftKey)
+        return;
+
+    switch (e.key) {
+
+        case `ArrowUp`: {
+            e.preventDefault();
+            send(`up`);
+        } break;
+
+        case `ArrowDown`: {
+            e.preventDefault();
+            send(`down`);
+        } break;
+
+        case `ArrowLeft`: {
+            e.preventDefault();
+            send(`left`);
+        } break;
+
+        case `ArrowRight`: {
+            e.preventDefault();
+            send(`right`);
+        } break;
+
+        default: {
+            console.log(e.key);
+        } break;
+
+    }
+
+});
+
+function send(input) {
+
+    websocket.send(JSON.stringify({ input }));
+
+}
 
 // ---
 
