@@ -1,12 +1,10 @@
 import Virtjs from 'virtjs';
 
 let canvas = document.querySelector(`#screen`);
-let logbox = document.querySelector(`#logbox .content`);
 let chatbox = document.querySelector(`#chatbox .content`);
-let userbox = document.querySelector(`#userbox`);
 
-let loglines = logbox.getElementsByClassName(`.line`);
-let chatlines = chatbox.getElementsByClassName(`.line`);
+let loglines = chatbox.getElementsByClassName(`.bot-line`);
+let chatlines = chatbox.getElementsByClassName(`.user-line`);
 
 // ---
 
@@ -29,11 +27,11 @@ websocket.addEventListener(`message`, e => {
         loglines[0].remove();
 
     let line = document.createElement(`div`);
-    line.className = `line`;
-    line.appendChild(document.createTextNode(`${data.input.name} (${Math.round(data.input.percent * 100)}%)`));
+    line.className = `bot-line`;
+    line.appendChild(document.createTextNode(`The selected input was ${data.input.name}, with ${Math.round(data.input.percent * 100)}% of the votes!`));
 
-    logbox.appendChild(line);
-    logbox.scrollTop = logbox.scrollHeight;
+    chatbox.appendChild(line);
+    chatbox.scrollTop = chatbox.scrollHeight;
 
 });
 
@@ -53,7 +51,7 @@ websocket.addEventListener(`message`, e => {
         chatlines[0].remove();
 
     let line = document.createElement(`div`);
-    line.className = `line`;
+    line.className = `user-line`;
     line.appendChild(document.createTextNode(data.chat));
 
     chatbox.appendChild(line);

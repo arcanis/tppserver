@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     margin: 0;
 
@@ -5,38 +9,17 @@ html, body {
     height: 100%;
 
     padding: 0;
-
-    background: #000000;
-}
-
-h1, h2 {
-    margin: 0;
-}
-
-h1 {
-    margin-bottom: .5em;
-}
-
-h2 {
-    border-bottom: 10px solid white;
-
-    background: #424242;
-}
-
-em {
-    font-style: normal;
-
-    color: #FFC000;
 }
 
 #main {
     display: flex;
+    flex-direction: row;
 
     width: 100%;
     height: 100%;
 }
 
-#wrapper {
+#main #wrapper {
     position: relative;
 
     flex: auto;
@@ -44,77 +27,164 @@ em {
     height: 100%;
 }
 
-#screen {
+#main #ui {
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+
+    flex: none;
+    width: 300px;
+}
+
+#main #ui > * {
+    flex: none;
+}
+
+#wrapper #screen {
     position: absolute;
 
     width: 100%;
     height: 100%;
 }
 
-#ui {
+#chatbox {
     display: flex;
     flex-direction: column;
 
-    flex: none;
-    width: 300px;
-
-    border-left: 10px solid white;
+    flex: 1 !important;
 }
 
-#ui > div {
-    font-family: monospace;
-    font-weight: bold;
+#chatbox > .title {
+    z-index: 2;
 
-    color: #ffffff;
-}
-
-#ui > * {
-    border-top: 10px solid white;
-}
-
-#ui > *:first-child {
-    border-top: 0;
-}
-
-#logbox, #chatbox {
-    display: flex;
-    flex-direction: column;
-}
-
-#logbox h2, #chatbox h2 {
     flex: none;
 }
 
-#instructions, #logbox h2, #chatbox h2, #logbox .content, #chatbox .content {
-    padding: 10px;
-}
-
-#logbox .content, #chatbox .content {
-    flex: auto;
-    width: 100%;
-    height: 100%;
+#chatbox > .content {
+    flex: 1;
 
     overflow-y: scroll;
 }
 
-#logbox {
-    flex: 1;
-    width: 100%;
-    height: 100%;
+/**/
+
+#screen {
+    background-color: #000000;
 }
 
-#chatbox {
-    flex: 1;
+#ui {
+    background-color: #e9ebee;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+
+    font-family: SF Optimized, system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+}
+
+#ui > .title {
+    border-bottom: 1px solid #29487d;
+
+    padding: 10px 12px;
+
+    background-color: #4267b2;
+    color: #ffffff;
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+    font-size: 12px;
+}
+
+.info {
+    margin: 5px;
+    padding: 10px;
+
+    border: 1px solid #dddfe2;
+    border-radius: 3px;
+
+    font-size: 14px;
+    text-align: justify;
+    line-height: 18px;
+
+    background: #ffffff;
+}
+
+.info kbd {
+    background-color:#f7f7f7;
+    border:1px solid #ccc;
+    border-radius:3px;
+    box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+    color:#333;
+    display:inline-block;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:11px;
+    margin:0;
+    line-height: 15px;
+    padding:0 3px;
+    text-shadow:0 1px 0 #fff;
+}
+
+.info p {
+    margin: 0;
+    margin-top: 7px;
+}
+
+.info p:first-child {
+    margin-top: 0;
+}
+
+#chatbox > .title {
+    height: 26px;
+
+    padding: 0 8px;
+
+    font-size: 12px;
+    line-height: 26px;
+
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .20);
+    background-color: rgb(175, 156, 218);
+    color: #ffffff;
+}
+
+#chatbox .content {
     width: 100%;
     height: 100%;
+
+    background: #ffffff;
+}
+
+#chatbox .bot-line {
+    margin: 10px;
+
+    font-size: 11px;
+    text-align: right;
+
+    color: #90949c;
+}
+
+#chatbox .user-line {
+    margin: 10px;
+
+    border-radius: 12px;
+
+    padding: 10px;
+
+    font-size: 12px;
+
+    background-color: #f1f0f0;
+    color: #4b4f56;
 }
 
 #userbox {
-    flex: none;
-    width: 100%;
-    height: 25px;
-
     border: 0;
+    border-top: 1px solid #ced0d4;
+
+    flex: none;
+    height: 32px;
+
+    padding: 0 10px;
+
+    line-height: 32px;
 
     outline: none;
+}
+
+#userbox::-webkit-input-placeholder {
+    color: #dddfe2;
 }
