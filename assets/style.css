@@ -82,13 +82,18 @@ html, body {
 #ui > .title {
     border-bottom: 1px solid #29487d;
 
-    padding: 10px 12px;
+    padding: 0 12px;
 
     background-color: #4267b2;
     color: #ffffff;
 
     font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
     font-size: 12px;
+    line-height: 32px;
+}
+
+#ui > .title img {
+    vertical-align: middle;
 }
 
 .info {

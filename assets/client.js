@@ -6,6 +6,8 @@ let chatbox = document.querySelector(`#chatbox .content`);
 let loglines = chatbox.getElementsByClassName(`.bot-line`);
 let chatlines = chatbox.getElementsByClassName(`.user-line`);
 
+let playerCount = document.querySelector('#player-count');
+
 // ---
 
 let websocket = new WebSocket(`ws://${location.host}`);
@@ -28,10 +30,12 @@ websocket.addEventListener(`message`, e => {
 
     let line = document.createElement(`div`);
     line.className = `bot-line`;
-    line.appendChild(document.createTextNode(`The selected input was ${data.input.name}, with ${Math.round(data.input.percent * 100)}% of the votes!`));
+    line.appendChild(document.createTextNode(`The selected input was ${data.input.name}!`));
 
     chatbox.appendChild(line);
     chatbox.scrollTop = chatbox.scrollHeight;
+
+    playerCount.innerText = data.input.playerCount;
 
 });
 
@@ -79,7 +83,12 @@ userbox.addEventListener(`keydown`, e => {
 
 });
 
+let ignoreShortkeys = false;
+
 userbox.addEventListener(`keydown`, e => {
+
+    if (ignoreShortkeys)
+        return;
 
     if (!e.shiftKey)
         return;
@@ -107,10 +116,16 @@ userbox.addEventListener(`keydown`, e => {
         } break;
 
         default: {
-            console.log(e.key);
+            return;
         } break;
 
     }
+
+    ignoreShortkeys = true;
+
+    setTimeout(() => {
+        ignoreShortkeys = false;
+    }, 1000);
 
 });
 

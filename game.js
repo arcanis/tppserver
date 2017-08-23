@@ -48,10 +48,7 @@ export default function (app, game) {
 
     setInterval(() => {
 
-        if (inputStorage.size === 0)
-            return;
-
-        let bestInputs = [];
+        let bestInputs = [ `LEFT`, `RIGHT`, `UP`, `DOWN`, `A`, `B` ];
         let bestVotes = 0;
 
         let totalVotes = 0;
@@ -87,7 +84,7 @@ export default function (app, game) {
                 continue;
 
             client.send(JSON.stringify({
-                input: { name: finalInput, percent: bestVotes / totalVotes }
+                input: { name: finalInput, percent: bestVotes !== 0 ? bestVotes / totalVotes : null, playerCount: app.ws.server.clients.size }
             }));
 
         }
